@@ -1,11 +1,7 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    It is now {{ current_datetime  }}.
-    
-</body>
-</html>
+{% extends 'base.html' %} 
+
+{% block title %} The current time {% endblock %}
+
+{% block content %}
+<p>It is now {{ current_datetime }}.</p>
+{% endblock %}

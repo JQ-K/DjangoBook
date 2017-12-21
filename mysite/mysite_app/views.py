@@ -17,5 +17,7 @@ def hours_ahead(request,offset):
     except ValueError:
         raise Http404()
     dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
-    html = "<html><body> in {} hour(s), it will be {}.</body></html>".format(offset, dt)
+    t = loader.get_template('hours_head.html')
+    html= t.render({'hour_offset':offset,'next_time':dt})
+    # html = "<html><body> in {} hour(s), it will be {}.</body></html>".format(offset, dt)
     return HttpResponse(html)
