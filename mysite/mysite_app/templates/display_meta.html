@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for k,v in  values %}
+       <table>
+        <tr>
+            <td>{{k}}</td>
+            <td>{{v}}</td>
+        </tr>
+       </table>
+{% endfor %}
+{% endblock %}

@@ -21,3 +21,22 @@ def hours_ahead(request,offset):
     html= t.render({'hour_offset':offset,'next_time':dt})
     # html = "<html><body> in {} hour(s), it will be {}.</body></html>".format(offset, dt)
     return HttpResponse(html)
+
+
+def display_meta(request):
+    values = request.META.items()
+    #values.sort()
+    t = loader.get_template('display_meta.html')
+    html = t.render({'values':values})
+    return HttpResponse(html)
+
+def search_form(request):
+    return render_to_response('search_from.html')
+
+def search(request):
+    if 'q' in request.GET:
+        message = "You searched for {}".format(request.GET['q'])
+    else:
+        message = 'You submitted an empty form.'
+    return HttpResponse(message)
+
