@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import loader, Context
 import datetime
+from mysite_app.models import Book
 
 def hello(request):
     return HttpResponse("Helo world")
@@ -34,9 +35,15 @@ def search_form(request):
     return render_to_response('search_from.html')
 
 def search(request):
+    errors = []
     if 'q' in request.GET:
-        message = "You searched for {}".format(request.GET['q'])
-    else:
-        message = 'You submitted an empty form.'
-    return HttpResponse(message)
-
+        q = request.GET['q']
+        if not q:
+            errors.append('Enter a search term.')
+        elif len(q) > 20:
+            errors.append('Please enter at most 20 characters.')
+        else:
+            books = Book.objects.filter(title__icontains=q)
+            return render_to_response('search_results.html',
+                {'books':books,'query':q})
+    return render_to_response('search_from.html',{'errors':errors})
